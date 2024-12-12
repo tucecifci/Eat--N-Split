@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import FriendsList from "./FriendsList";
 import FormAddFriend from "./FormaddFriend";
+import FormSplitBill from "./FormSplitBill";
 
 
 function App() {
@@ -32,8 +33,8 @@ function App() {
           <FriendsList initialFriends={initialFriends} />
           <FormAddFriend />
           <button className="button">Add friend</button>
-
         </div>
+        <FormSplitBill />
       </div>
   );
 }
