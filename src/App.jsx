@@ -3,36 +3,47 @@ import "./App.css";
 import FriendsList from "./FriendsList";
 import FormAddFriend from "./FormaddFriend";
 import FormSplitBill from "./FormSplitBill";
-
+import { use } from "react";
+const initialFriends = [
+  {
+    id: 118836,
+    name: "Clark",
+    image: "https://i.pravatar.cc/48?u=118836",
+    balance: -7,
+  },
+  {
+    id: 933372,
+    name: "Sarah",
+    image: "https://i.pravatar.cc/48?u=933372",
+    balance: 20,
+  },
+  {
+    id: 499476,
+    name: "Anthony",
+    image: "https://i.pravatar.cc/48?u=499476",
+    balance: 0,
+  },
+];
 
 function App() {
-  const initialFriends = [
-    {
-      id: 118836,
-      name: "Clark",
-      image: "https://i.pravatar.cc/48?u=118836",
-      balance: -7,
-    },
-    {
-      id: 933372,
-      name: "Sarah",
-      image: "https://i.pravatar.cc/48?u=933372",
-      balance: 20,
-    },
-    {
-      id: 499476,
-      name: "Anthony",
-      image: "https://i.pravatar.cc/48?u=499476",
-      balance: 0,
-    },
-  ];
+ const [showAddFriend, setShowAddFriend] = useState(false); //false olduğu için tablo gözükmüyor
+ const [friends, setFriends] = useState(initialFriends);
+
+ function handleShowAddFriend(){ //add friend butonuna basınca tabloyu göstermesi için
+  setShowAddFriend((show) => !show);
+ }
+
+ function handleAddFriend(friend){
+  setFriends((friends) => [...friends, friend]);
+  setShowAddFriend(false); //arkadas ekledikten sonra formun otomatik olarak kapanması için
+ }
 
   return (
       <div className="app">
         <div className="sidebar">
-          <FriendsList initialFriends={initialFriends} />
-          <FormAddFriend />
-          <button className="button">Add friend</button>
+          <FriendsList friends={friends} />
+          {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />} 
+          <button className="button" onClick={handleShowAddFriend} >{showAddFriend ? "Close" : "Add friend"} </button>
         </div>
         <FormSplitBill />
       </div>

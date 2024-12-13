@@ -1,11 +1,11 @@
 import React from 'react'
 import Friend from './Friend'
 
-function FriendsList({initialFriends}) {
+function FriendsList({friends}) {
   return (
     <div>
         <ul>
-            {initialFriends.map((friend) => (
+            {friends.map((friend) => (
                <Friend key={friend.id} friend={friend} />
                 
             ))}
