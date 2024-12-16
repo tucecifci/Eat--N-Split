@@ -42,8 +42,19 @@ function App() {
 
   function handleSelection(friend) {
     // setSelectedFriend(friend);
-    setSelectedFriend((cur) => (cur?.id === friend.id ? null: friend));
+    setSelectedFriend((cur) => (cur?.id === friend.id ? null : friend));
     setShowAddFriend(false); // add frinde bastım ama vazgeçtim, tüm formlar aynı anda açık olmasın diye selecte basınca bu otomakit kapanacak
+  }
+
+  function handleSplitBill(value) {
+    setFriends((friends) =>
+      friends.map((friend) =>
+        friend.id === selectedFriend.id
+          ? { ...friend, balance: friend.balance + value }
+          : friend
+      )
+    );
+    setSelectedFriend(null);
   }
 
   return (
@@ -59,7 +70,12 @@ function App() {
           {showAddFriend ? "Close" : "Add friend"}{" "}
         </button>
       </div>
-      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} />}
+      {selectedFriend && (
+        <FormSplitBill
+          selectedFriend={selectedFriend}
+          onSplitBill={handleSplitBill}
+        />
+      )}
     </div>
   );
 }
