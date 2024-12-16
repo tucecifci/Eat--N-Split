@@ -1,9 +1,9 @@
 import React from 'react'
 
-function Friend({friend}) {
+function Friend({friend, onSelection, selectedFriend}) {
+    const isSelected = selectedFriend?.id === friend.id;
   return (
-    <li>
-         
+    <li className={isSelected ? "selected" : ""} >
         <img src={friend.image} alt={friend.name} />
         <h3>{friend.name} </h3>
 
@@ -18,7 +18,7 @@ function Friend({friend}) {
          {friend.balance === 0 && (
             <p> You and your {friend.name} are even.</p>
         )}
-        <button className='button'>Select</button>
+        <button onClick={() => onSelection(friend)} className='button'>{isSelected ? "Close" : "Select"} </button>
     </li>
   )
 }

@@ -26,27 +26,41 @@ const initialFriends = [
 ];
 
 function App() {
- const [showAddFriend, setShowAddFriend] = useState(false); //false olduğu için tablo gözükmüyor
- const [friends, setFriends] = useState(initialFriends);
+  const [showAddFriend, setShowAddFriend] = useState(false); //false olduğu için tablo gözükmüyor
+  const [friends, setFriends] = useState(initialFriends);
+  const [selectedFriend, setSelectedFriend] = useState(null); //bunu null diye tanımladık çünkü ilk etapta seçilen bir friend yok
 
- function handleShowAddFriend(){ //add friend butonuna basınca tabloyu göstermesi için
-  setShowAddFriend((show) => !show);
- }
+  function handleShowAddFriend() {
+    //add friend butonuna basınca tabloyu göstermesi için
+    setShowAddFriend((show) => !show);
+  }
 
- function handleAddFriend(friend){
-  setFriends((friends) => [...friends, friend]);
-  setShowAddFriend(false); //arkadas ekledikten sonra formun otomatik olarak kapanması için
- }
+  function handleAddFriend(friend) {
+    setFriends((friends) => [...friends, friend]);
+    setShowAddFriend(false); //arkadas ekledikten sonra formun otomatik olarak kapanması için
+  }
+
+  function handleSelection(friend) {
+    // setSelectedFriend(friend);
+    setSelectedFriend((cur) => (cur?.id === friend.id ? null: friend));
+    setShowAddFriend(false); // add frinde bastım ama vazgeçtim, tüm formlar aynı anda açık olmasın diye selecte basınca bu otomakit kapanacak
+  }
 
   return (
-      <div className="app">
-        <div className="sidebar">
-          <FriendsList friends={friends} />
-          {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />} 
-          <button className="button" onClick={handleShowAddFriend} >{showAddFriend ? "Close" : "Add friend"} </button>
-        </div>
-        <FormSplitBill />
+    <div className="app">
+      <div className="sidebar">
+        <FriendsList
+          friends={friends}
+          onSelection={handleSelection}
+          selectedFriend={selectedFriend}
+        />
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
+        <button className="button" onClick={handleShowAddFriend}>
+          {showAddFriend ? "Close" : "Add friend"}{" "}
+        </button>
       </div>
+      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} />}
+    </div>
   );
 }
 
