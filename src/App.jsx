@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 import FriendsList from "./FriendsList";
-import FormAddFriend from "./FormaddFriend";
+import FormAddFriend from "./FormAddFriend";
 import FormSplitBill from "./FormSplitBill";
 import { use } from "react";
 const initialFriends = [
